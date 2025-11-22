@@ -45,6 +45,7 @@
         // ORIGENS PERMITIDAS (3 AMBIENTES)
         const allowedOrigins = [
             "http://127.0.0.1:5500",
+            "https://www.porttusmart.tech",
             "https://site-condomino-piv.vercel.app",
             "https://d336vgy098gi03.cloudfront.net"
         ];
@@ -52,7 +53,7 @@
         // Determina dinamicamente para qual origin responder
         const openerOrigin = allowedOrigins.find(origin =>
             document.referrer.startsWith(origin)
-        ) || allowedOrigins[0];
+        ) || "https://www.porttusmart.tech"; // Default seguro
 
         if (error) {
             console.error('Erro do Google:', error);
