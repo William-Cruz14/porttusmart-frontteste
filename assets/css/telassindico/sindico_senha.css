@@ -1,0 +1,109 @@
+/* ============================= */
+/* ===== VARIÁVEIS GLOBAIS ===== */
+/* ============================= */
+:root {
+  --border-color: #ccc;
+  --accent-color: #007b57;
+  --warning-color: #f2b200;
+  --text-light: #fff;
+  --text-dark: #222;
+}
+
+/* ============================= */
+/* ==== TELA TROCAR SENHA ===== */
+/* ============================= */
+
+.trocar-senha-container {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.trocar-senha-container h2 {
+  text-align: left; /* alinhado à esquerda */
+  color: var(--text-light);
+  margin-bottom: 10px;
+}
+
+/* FORM GRUPOS */
+.form-group-senha {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;   /* agora tudo fica alinhado à esquerda */
+}
+
+.form-group-senha label {
+  font-weight: bold;
+  color: var(--text-light);
+  margin-bottom: 6px;
+}
+
+.form-group-senha input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-light);
+  width: 250px;  /* mantém largura reduzida */
+}
+
+/* AÇÕES */
+.senha-actions {
+  display: flex;
+  justify-content: flex-start; /* botões alinhados à esquerda */
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.btn-salvar-senha,
+.btn-cancelar-senha {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 0 0 150px;   /* largura reduzida */
+}
+
+.btn-salvar-senha {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.btn-salvar-senha:hover {
+  background-color: #005a3e;
+}
+
+.btn-cancelar-senha {
+  background-color: var(--warning-color);
+  color: var(--text-dark);
+}
+
+.btn-cancelar-senha:hover {
+  background-color: #d8a200;
+}
+
+/* Caixa de feedback */
+.msg-sucesso-senha,
+.msg-erro-senha {
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.msg-sucesso-senha {
+  background: rgba(0, 150, 80, 0.2);
+  color: #00e28a;
+  border: 1px solid #00e28a;
+}
+
+.msg-erro-senha {
+  background: rgba(255, 0, 0, 0.2);
+  color: #ff7b7b;
+  border: 1px solid #ff7b7b;
+}

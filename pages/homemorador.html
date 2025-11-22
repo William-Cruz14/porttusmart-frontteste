@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel Morador</title>
+  <link rel="stylesheet" href="../assets/css/homemorador.css" />
+  <link rel="stylesheet" href="../assets/css/ia_chatbot.css" />
+
+  <link rel="stylesheet" href="../assets/css/telasmorador/morador_dados.css" />
+  <link rel="stylesheet" href="../assets/css/telasmorador/morador_veiculo.css" />
+  <link rel="stylesheet" href="../assets/css/telasmorador/morador_reserva.css" />
+  <link rel="stylesheet" href="../assets/css/telasmorador/morador_pedido.css" />
+  <link rel="stylesheet" href="../assets/css/telasmorador/morador_documento.css" />
+  <link rel="stylesheet" href="../assets/css/telasmorador/morador_comunicado.css" />
+  <link rel="stylesheet" href="../assets/css/telasmorador/morador_mensagens.css" />
+  <link rel="stylesheet" href="../assets/css/telasmorador/morador_senha.css" />
+  
+</head>
+<body>
+
+  <!-- Header / Topbar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="mobile-toggle" aria-label="Abrir menu">☰</button>
+      <a href="homemorador.html">
+        <img src="../assets/img/logoinit.jpeg" alt="Logo PorttuSmart" class="logo">
+      </a>
+    </div>
+
+    <div class="topbar-right">
+      <button class="icon-btn" aria-label="buscar">🔍</button>
+      
+      <!-- 🔔 Notificações -->
+      <div class="notification-wrapper">
+        <button id="notification-bell" class="icon-btn" aria-label="notificações">
+          🔔
+          <div id="notification-count"></div>
+        </button>
+        <div id="notification-dropdown" class="notification-dropdown">
+          <p class="no-notifications">Nenhuma nova solicitação.</p>
+        </div>
+      </div>
+      <button class="icon-btn" id="menuButton" aria-label="menu">⋮</button>
+    </div>
+
+    <div class="menu-dropdown" id="menuDropdown">
+      <a href="#">Alterar Senha</a>
+      <a href="../pages/logout.html" id="logoutBtn">Sair</a>
+    </div>
+  </header>
+
+  <!-- Área principal (sidebar + conteúdo) -->
+  <div class="main">
+    <!-- Menu lateral -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="avatar">👤</div>
+        <p class="greeting" id="moradorNome">Olá, Morador</p>
+      </div>
+
+      <!-- Menu fixo: condomínio atual -->
+      <nav class="menu-fixed">
+        <p class="menu-title">Meu Condomínio</p>
+        <div class="item active" id="condominioNome">Condomínio A</div>
+      </nav>
+
+      <!-- Menu rolável atualizado -->
+      <nav class="menu-scroll" aria-label="menu principal">
+        <!-- Meus Dados -->
+        <div class="menu-item" id="menuDados">
+          <input type="checkbox" id="meusdados-toggle" />
+          <label for="meusdados-toggle" class="item">Meus Dados ▾</label>
+          <div class="submenu">
+            <div class="subitem active">Atualizar Cadastro</div>
+          </div>
+        </div>
+
+        <!-- Veículos -->
+        <div class="menu-item" id="menuVeiculos">
+          <input type="checkbox" id="veiculos-toggle" />
+          <label for="veiculos-toggle" class="item">Veículos ▾</label>
+          <div class="submenu">
+            <div class="subitem">Meus Veículos</div>
+          </div>
+        </div>
+
+        <!-- Áreas Comuns -->
+        <div class="menu-item" id="menuReservas">
+          <input type="checkbox" id="areas-toggle" />
+          <label for="areas-toggle" class="item">Áreas Comuns ▾</label>
+          <div class="submenu">
+            <div class="subitem">Reservar Espaço</div>
+            <div class="subitem">Minhas Reservas</div>
+          </div>
+        </div>
+
+        <!-- Entregas -->
+        <div class="menu-item" id="menuEntregas">
+          <input type="checkbox" id="entregas-toggle" />
+          <label for="entregas-toggle" class="item">Entregas ▾</label>
+          <div class="submenu">
+            <div class="subitem">Minhas Entregas</div>
+          </div>
+        </div>
+
+        <!-- Documentos -->
+        <div class="menu-item" id="menuDocumentos">
+          <input type="checkbox" id="documentos-toggle" />
+          <label for="documentos-toggle" class="item">Documentos ▾</label>
+          <div class="submenu">
+            <div class="subitem">Documentos do condomínio</div>
+          </div>
+        </div>
+
+        <!-- Comunicados -->
+        <div class="menu-item" id="menuComunicados">
+          <input type="checkbox" id="comunicados-toggle" />
+          <label for="comunicados-toggle" class="item">Comunicados ▾</label>
+          <div class="submenu">
+            <div class="subitem">Meus Comunicados</div>
+          </div>
+        </div>
+
+        <!-- Mensagens -->
+        <div class="menu-item" id="menuMensagens">
+          <input type="checkbox" id="mensagens-toggle" />
+          <label for="mensagens-toggle" class="item">Mensagens ▾</label>
+          <div class="submenu">
+            <div class="subitem" data-tela="Enviar Mensagem">Enviar mensagens</div>
+            <div class="subitem" data-tela="Histórico de Mensagens">Histórico de mensagens</div>
+          </div>
+        </div>
+
+      </nav>
+    </aside>
+
+    <!-- Conteúdo principal -->
+    <main class="content">
+      <div class="content-top">
+        <h1>Bem-vindo ao seu espaço digital no condomínio.</h1>
+        <p class="lead">Aqui você pode acessar seus boletos, reservar áreas comuns, registrar ocorrências e ficar por dentro dos comunicados.</p>
+      </div>
+
+      <!-- Cards no rodapé da área de conteúdo -->
+      <div class="bottom-cards">
+        <div class="card financeiro">
+          <h3>Financeiro</h3>
+          <p>Acesse seus boletos e acompanhe o histórico de pagamentos.</p>
+        </div>
+        <div class="card areas">
+          <h3>Áreas Comuns</h3>
+          <p>Reserve espaços como salão de festas, churrasqueira e muito mais.</p>
+        </div>
+        <div class="card comunicados">
+          <h3>Comunicados</h3>
+          <p>Fique por dentro dos avisos e documentos oficiais do condomínio.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../assets/js/mobile.js"></script>
+  <script src="../assets/js/homemorador.js"></script> 
+  <script src="../assets/js/logout.js"></script>
+  <script src="../assets/js/morador_notificacoes.js"></script>
+  <script src="../assets/js/infomorador.js"></script>
+
+  <!-- 🚚 Scripts do módulo de Dados -->
+  <script src="../assets/js/telasmorador/dados/apiDados.js"></script>
+  <script src="../assets/js/telasmorador/dados/telasDados.js"></script>
+  <script src="../assets/js/telasmorador/dados/main.js"></script>
+
+  <!-- 🚚 Scripts do módulo de Veiculos -->
+  <script src="../assets/js/telasmorador/veiculos/apiVeiculos.js"></script>
+  <script src="../assets/js/telasmorador/veiculos/telasVeiculos.js"></script>
+  <script src="../assets/js/telasmorador/veiculos/main.js"></script>
+
+  <!-- 🚚 Scripts do módulo de Reservas -->
+  <script src="../assets/js/telasmorador/reservas/apiReservas.js"></script>
+  <script src="../assets/js/telasmorador/reservas/telasReservas.js"></script>
+  <script src="../assets/js/telasmorador/reservas/main.js"></script>
+
+  <!-- 🚚 Scripts do módulo de Entregas -->
+  <script src="../assets/js/telasmorador/pedidos/apiPedidos.js"></script>
+  <script src="../assets/js/telasmorador/pedidos/telasPedidos.js"></script>
+  <script src="../assets/js/telasmorador/pedidos/main.js"></script>
+
+  <!-- 🚚 Scripts do módulo de Documentos -->
+  <script src="../assets/js/telasmorador/documentos/apiDocumentos.js"></script>
+  <script src="../assets/js/telasmorador/documentos/telasDocumentos.js"></script>
+  <script src="../assets/js/telasmorador/documentos/main.js"></script>
+
+  <!-- 🚚 Scripts do módulo de Comunicados -->
+  <script src="../assets/js/telasmorador/comunicados/apiComunicados.js"></script>
+  <script src="../assets/js/telasmorador/comunicados/telasComunicados.js"></script>
+  <script src="../assets/js/telasmorador/comunicados/main.js"></script>
+
+  <!-- 🚚 Scripts do módulo de Mensagens -->
+  <script src="../assets/js/telasmorador/mensagens/apiMensagens.js"></script>
+  <script src="../assets/js/telasmorador/mensagens/telasMensagens.js"></script>
+  <script src="../assets/js/telasmorador/mensagens/main.js"></script>
+
+  <!-- 🚚 Scripts do módulo de troca de senha -->
+  <script src="../assets/js/telasmorador/senha/apiSenha.js"></script>
+  <script src="../assets/js/telasmorador/senha/telasSenha.js"></script>
+  <script src="../assets/js/telasmorador/senha/main.js"></script>
+
+  <script src="../assets/js/morador_menu.js"></script>
+  <!-- Script do menu suspenso -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const menuButton = document.getElementById("menuButton");
+      const dropdown = document.getElementById("menuDropdown");
+
+      menuButton.addEventListener("click", function(e) {
+        e.stopPropagation();
+        dropdown.classList.toggle("menu-open");
+      });
+
+      document.addEventListener("click", function(e) {
+        if (!dropdown.contains(e.target) && e.target !== menuButton) {
+          dropdown.classList.remove("menu-open");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+/* ============================= */
+/* ===== ESTILOS MENSAGENS ===== */
+/* ============================= */
+
+.content-top-mensagens {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 900px;
+  margin-bottom: 20px;
+}
+
+/* Formulário de envio de mensagem */
+.form-mensagens {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 600px;
+}
+
+.form-mensagens label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-mensagens input,
+.form-mensagens textarea {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.form-mensagens textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+#btnEnviarMensagem {
+  padding: 10px 15px;
+  background-color: var(--accent-color, #007b57);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 150px;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+#btnEnviarMensagem:hover {
+  background-color: #005e44; /* Tom mais escuro do verde */
+}
+
+/* Histórico de mensagens */
+.historico-tabela-mensagens {
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  color: var(--text-dark);
+  max-width: 1000px;
+}
+
+.tabela-historico-mensagens {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-dark);
+}
+
+.tabela-historico-mensagens th,
+.tabela-historico-mensagens td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  color: var(--text-dark);
+}
+
+.tabela-historico-mensagens th {
+  background: var(--primary-color, #007b57);
+  color: white;
+}
+
+.tabela-historico-mensagens tr:hover {
+  background: #eaeaea;
+}
+
+.loading-mensagens {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-light);
+  font-size: 16px;
+}
+
+/* Feedback envio */
+.feedback-mensagem {
+  font-size: 14px;
+  font-weight: bold;
+}

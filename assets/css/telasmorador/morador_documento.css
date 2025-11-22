@@ -1,0 +1,107 @@
+/* ============================= */
+/* ===== ESTILOS DOCUMENTOS ==== */
+/* ============================= */
+
+:root {
+  --accent-color: #007b57;     /* Botão BAIXAR */
+  --warning-color: #f2b200;    /* Botão RESUMIR */
+}
+
+/* Container geral */
+.content-top-documentos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 900px;
+  margin-bottom: 20px;
+  color: var(--text-light);
+}
+
+/* Wrapper da tabela */
+.documentos-tabela-wrapper {
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  color: var(--text-dark);
+  max-width: 1000px;
+}
+
+/* Tabela */
+.documentos-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-dark);
+}
+
+.documentos-tabela th,
+.documentos-tabela td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.documentos-tabela th {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.documentos-tabela tr:hover {
+  background: #eaeaea;
+}
+
+/* ============================= */
+/* ======== COLUNA AÇÕES ======= */
+/* ============================= */
+
+.acoes-documentos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 140px;
+}
+
+/* Botão padrão */
+.btn-baixar-doc,
+.btn-resumir-doc {
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  font-weight: 600;
+  transition: 0.2s ease-in-out;
+}
+
+/* Botão BAIXAR */
+.btn-baixar-doc {
+  background-color: var(--accent-color);
+}
+
+.btn-baixar-doc:hover {
+  background-color: #005f43;
+  transform: scale(1.03);
+}
+
+/* Botão RESUMIR */
+.btn-resumir-doc {
+  background-color: var(--warning-color);
+  color: #333;
+}
+
+.btn-resumir-doc:hover {
+  background-color: #d89b00;
+  transform: scale(1.03);
+}
+
+/* Loader */
+.loading-documentos {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-light);
+  font-size: 16px;
+}

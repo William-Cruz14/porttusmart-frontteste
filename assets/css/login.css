@@ -1,0 +1,207 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
+}
+
+/* Fundo */
+body {
+  background-image: url("../img/fundo-login.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+  overflow-y: auto;
+}
+
+/* Container principal */
+.container {
+  width: 350px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* Header */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  object-fit: contain;
+}
+
+@media (max-width: 480px) {
+  .logo {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+.titulo-logo {
+  font-size: 24px;
+  font-weight: normal;
+  color: #fff;
+}
+
+/* Subtítulo */
+.subtitulo {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Formulário */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.login-form input,
+.login-form select {
+  padding: 12px;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+}
+
+.login-form input::placeholder {
+  color: #aaa;
+}
+
+.login-form button {
+  background: #00c08b;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-form button:hover {
+  background: #009b70;
+}
+
+/* Links extras */
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.links a {
+  color: #00c08b;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+/* Rodapé */
+footer {
+  font-size: 12px;
+  color: #bbb;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Select personalizado */
+.login-form select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.login-form select option {
+  color: #000;
+}
+
+/* Formulário de endereço em duas colunas */
+.endereco-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* Estilizando cada input do endereço */
+.endereco-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+}
+
+.endereco-group input::placeholder {
+  color: #aaa;
+}
+
+/* Campos que ocupam duas colunas (CEP, por exemplo) */
+.endereco-group input[name="cep"] {
+  grid-column: 1 / 3;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Login social */
+.social-login {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.google-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid #555;
+  background: #fff;
+  color: #444;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.3s;
+}
+
+.google-btn:hover {
+  background: #e6e6e6;
+}
+
+.google-btn img {
+  width: 20px;
+  height: 20px;
+}

@@ -1,0 +1,175 @@
+/* ============================= */
+/* ===== VARIÁVEIS GLOBAIS ===== */
+/* ============================= */
+:root {
+  --border-color: #ccc;
+  --accent-color: #007b57;
+  --warning-color: #f2b200;
+  --text-light: #fff;
+  --text-dark: #222;
+}
+
+/* ============================= */
+/* ===== ESTILOS VISITANTE ===== */
+/* ============================= */
+
+/* ===== Cadastro ===== */
+.form-cadastro-visitante {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+}
+
+.form-group-visitante {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-visitante label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group-visitante input,
+.form-group-visitante select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-light);
+}
+
+.endereco-group-visitante {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.form-actions-visitante {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-salvar-visitante {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-salvar-visitante:hover {
+  background-color: #005a3e;
+}
+
+.btn-cancelar-visitante {
+  background-color: var(--warning-color);
+  color: var(--text-dark);
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-cancelar-visitante:hover {
+  background-color: #d8a200;
+}
+
+/* ===== Histórico ===== */
+.historico-container-visitante {
+  background: #b0b0b0;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 1000px;
+  color: var(--text-dark);
+}
+
+.historico-filtros-visitante {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.historico-filtros-visitante input,
+.historico-filtros-visitante select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background: white;
+  color: var(--text-dark);
+}
+
+.historico-filtros-visitante button {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--accent-color);
+  color: white;
+  cursor: pointer;
+}
+
+.historico-filtros-visitante button:hover {
+  background-color: #005a3e;
+}
+
+.historico-tabela-visitante {
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  color: var(--text-dark);
+}
+
+.tabela-historico-visitante {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-dark);
+}
+
+.tabela-historico-visitante th,
+.tabela-historico-visitante td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  color: var(--text-dark);
+}
+
+.tabela-historico-visitante th {
+  background: var(--primary-color, #072241);
+  color: white;
+}
+
+.tabela-historico-visitante tr:hover {
+  background: #eaeaea;
+}
+
+.btn-editar-visitante,
+.btn-excluir-visitante {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-editar-visitante {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-editar-visitante:hover {
+  background-color: #0056b3;
+}
+
+.btn-excluir-visitante {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-excluir-visitante:hover {
+  background-color: #a71d2a;
+}

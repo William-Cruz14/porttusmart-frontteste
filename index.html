@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PorttuSmart</title>
+  <link rel="stylesheet" href="assets/css/login.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Logo e título -->
+    <div class="header">
+      <img src="assets/img/logoinit.jpeg" alt="Logo PorttuSmart" class="logo">
+      <h1 class="titulo-logo">PorttuSmart</h1>
+    </div>
+
+    <!-- Área de login -->
+    <h2 class="subtitulo">Usuário cadastrado</h2>
+
+    <form class="login-form" id="loginForm">
+      <input type="email" id="email" placeholder="Digite o seu e-mail" required>
+      <input type="password" id="password" placeholder="Digite a sua senha" required>
+      <button type="submit">Entrar</button>
+    </form>
+
+    <!-- Botão Login com Google -->
+    <div class="social-login">
+      <button id="googleLoginBtn" class="google-btn">
+        <img src="assets/img/google-icon.png" alt="Google logo">
+        Entrar com Google
+      </button>
+    </div>
+
+    <!-- Links extras -->
+    <div class="links">
+      <a href="pages/esqueceusenha.html">Esqueceu sua senha?</a>
+      <a href="pages/cadastrese.html">Cadastre-se</a>
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+      <p>Política de privacidade</p>
+      <p>Acordo de confidencialidade</p>
+    </footer>
+  </div>
+
+  <script src="assets/js/login.js"></script>
+  <script src="assets/js/loginsocial.js"></script>
+</body>
+</html>

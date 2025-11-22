@@ -1,0 +1,185 @@
+-- ==========================================
+-- Banco de dados PorttuSmart - Tabelas
+-- ==========================================
+
+-- 1️⃣ Condominio
+CREATE TABLE condominio (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cnpj VARCHAR(14) UNIQUE NOT NULL,
+    rua VARCHAR(100) NOT NULL,
+    numero VARCHAR(10) NOT NULL,
+    complemento VARCHAR(50),
+    bairro VARCHAR(80) NOT NULL,
+    cidade VARCHAR(80) NOT NULL,
+    estado VARCHAR(50) NOT NULL,
+    cep VARCHAR(20) NOT NULL
+);
+
+-- 2️⃣ Usuario
+CREATE TABLE usuario (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) UNIQUE NOT NULL,
+    telefone VARCHAR(20) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    rua VARCHAR(100) NOT NULL,
+    numero VARCHAR(10) NOT NULL,
+    complemento VARCHAR(50),
+    bairro VARCHAR(80) NOT NULL,
+    cidade VARCHAR(80) NOT NULL,
+    estado VARCHAR(50) NOT NULL,
+    cep VARCHAR(20) NOT NULL,
+    tipo_usuario VARCHAR(20) NOT NULL CHECK (tipo_usuario IN ('sindico', 'morador')),
+    condominio_id INT NOT NULL,
+    FOREIGN KEY (condominio_id) REFERENCES condominio(id) ON DELETE CASCADE
+);
+
+-- 3️⃣ Morador
+CREATE TABLE morador (
+    id SERIAL PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    condominio_id INT NOT NULL,
+    data_entrada DATE NOT NULL,
+    data_saida DATE,
+    status VARCHAR(20) DEFAULT 'ativo',
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE,
+    FOREIGN KEY (condominio_id) REFERENCES condominio(id) ON DELETE CASCADE
+);
+
+-- 4️⃣ Dependência (para moradores)
+CREATE TABLE dependencia (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    usuario_id INT NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
+);
+
+-- 5️⃣ Visitante
+CREATE TABLE visitante (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    documento VARCHAR(50),
+    telefone VARCHAR(20),
+    condominio_id INT NOT NULL,
+    morador_id INT,
+    entrada TIMESTAMP NOT NULL,
+    saida TIMESTAMP,
+    FOREIGN KEY (condominio_id) REFERENCES condominio(id) ON DELETE CASCADE,
+    FOREIGN KEY (morador_id) REFERENCES morador(id) ON DELETE SET NULL
+);
+
+-- 6️⃣ Veículo
+CREATE TABLE veiculo (
+    id SERIAL PRIMARY KEY,
+    placa VARCHAR(10) NOT NULL,
+    modelo VARCHAR(100),
+    cor VARCHAR(50),
+    morador_id INT NOT NULL,
+    visitante_id INT,
+    vaga VARCHAR(10),
+    FOREIGN KEY (morador_id) REFERENCES morador(id) ON DELETE CASCADE,
+    FOREIGN KEY (visitante_id) REFERENCES visitante(id) ON DELETE SET NULL
+);
+
+-- 7️⃣ Área Comum
+CREATE TABLE area_comum (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    condominio_id INT NOT NULL,
+    FOREIGN KEY (condominio_id) REFERENCES condominio(id) ON DELETE CASCADE
+);
+
+-- 8️⃣ Reserva de Área
+CREATE TABLE reserva_area (
+    id SERIAL PRIMARY KEY,
+    area_comum_id INT NOT NULL,
+    morador_id INT NOT NULL,
+    data_reserva DATE NOT NULL,
+    hora_inicio TIME NOT NULL,
+    hora_fim TIME NOT NULL,
+    status VARCHAR(20) DEFAULT 'pendente' CHECK (status IN ('pendente', 'aprovada', 'recusada')),
+    FOREIGN KEY (area_comum_id) REFERENCES area_comum(id) ON DELETE CASCADE,
+    FOREIGN KEY (morador_id) REFERENCES morador(id) ON DELETE CASCADE
+);
+
+-- 9️⃣ Histórico de Reserva
+CREATE TABLE reserva_historico (
+    id SERIAL PRIMARY KEY,
+    reserva_area_id INT NOT NULL,
+    status VARCHAR(20) NOT NULL CHECK (status IN ('pendente','aprovada','recusada','cancelada')),
+    data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (reserva_area_id) REFERENCES reserva_area(id) ON DELETE CASCADE
+);
+
+-- 🔟 Financeiro
+CREATE TABLE financeiro (
+    id SERIAL PRIMARY KEY,
+    tipo VARCHAR(20) NOT NULL CHECK (tipo IN ('cobranca','pagamento')),
+    descricao TEXT NOT NULL,
+    valor DECIMAL(10,2) NOT NULL,
+    vencimento DATE NOT NULL,
+    status VARCHAR(20) DEFAULT 'pendente' CHECK (status IN ('pendente','pago','atrasado')),
+    condominio_id INT NOT NULL,
+    morador_id INT NOT NULL,
+    FOREIGN KEY (condominio_id) REFERENCES condominio(id) ON DELETE CASCADE,
+    FOREIGN KEY (morador_id) REFERENCES morador(id) ON DELETE CASCADE
+);
+
+-- 1️⃣1️⃣ Pagamento
+CREATE TABLE pagamento (
+    id SERIAL PRIMARY KEY,
+    financeiro_id INT NOT NULL,
+    data_pagamento DATE NOT NULL,
+    valor_pago DECIMAL(10,2) NOT NULL,
+    metodo_pagamento VARCHAR(50),
+    FOREIGN KEY (financeiro_id) REFERENCES financeiro(id) ON DELETE CASCADE
+);
+
+-- 1️⃣2️⃣ Ocorrência
+CREATE TABLE ocorrencia (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    descricao TEXT NOT NULL,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(20) DEFAULT 'aberta' CHECK (status IN ('aberta','em andamento','concluida')),
+    condominio_id INT NOT NULL,
+    morador_id INT,
+    FOREIGN KEY (condominio_id) REFERENCES condominio(id) ON DELETE CASCADE,
+    FOREIGN KEY (morador_id) REFERENCES morador(id) ON DELETE SET NULL
+);
+
+-- 1️⃣3️⃣ Comunicado
+CREATE TABLE comunicado (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    mensagem TEXT NOT NULL,
+    data TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    condominio_id INT NOT NULL,
+    usuario_id INT NOT NULL,
+    FOREIGN KEY (condominio_id) REFERENCES condominio(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
+);
+
+-- 1️⃣4️⃣ Documento do Condomínio
+CREATE TABLE documento_condominio (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(150) NOT NULL,
+    arquivo_path TEXT NOT NULL,
+    condominio_id INT NOT NULL,
+    FOREIGN KEY (condominio_id) REFERENCES condominio(id) ON DELETE CASCADE
+);
+
+-- 1️⃣5️⃣ Mensagem
+CREATE TABLE mensagem (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(150),
+    conteudo TEXT NOT NULL,
+    remetente_id INT NOT NULL,
+    destinatario_id INT NOT NULL,
+    data_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (remetente_id) REFERENCES usuario(id) ON DELETE CASCADE,
+    FOREIGN KEY (destinatario_id) REFERENCES usuario(id) ON DELETE CASCADE
+);

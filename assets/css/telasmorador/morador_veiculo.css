@@ -1,0 +1,170 @@
+/* ============================= */
+/* ===== VARIÁVEIS GLOBAIS ===== */
+/* ============================= */
+:root {
+  --border-color: #ccc;
+  --accent-color: #007b57;
+  --warning-color: #f2b200;
+  --text-light: #fff;
+  --text-dark: #222;
+  --primary-color: #072241;
+}
+
+/* ============================= */
+/* ===== ESTILOS VEÍCULOS ======= */
+/* ============================= */
+
+/* ===== Cadastro / Histórico Veículos ===== */
+.form-cadastro-veiculos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+}
+
+.form-group-veiculos {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-veiculos label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group-veiculos input,
+.form-group-veiculos select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-light);
+}
+
+.form-actions-veiculos {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-buscar-veiculo {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-buscar-veiculo:hover {
+  background-color: #005a3e;
+}
+
+.btn-limpar-veiculo {
+  background-color: var(--warning-color);
+  color: var(--text-dark);
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-limpar-veiculo:hover {
+  background-color: #d8a200;
+}
+
+/* ===== Histórico Veículos ===== */
+.historico-container-veiculos {
+  background: #b0b0b0;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 1000px;
+  color: var(--text-dark);
+}
+
+.historico-filtros-veiculos {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.historico-filtros-veiculos input,
+.historico-filtros-veiculos select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background: white;
+  color: var(--text-dark);
+}
+
+.historico-filtros-veiculos button {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--accent-color);
+  color: white;
+  cursor: pointer;
+}
+
+.historico-filtros-veiculos button:hover {
+  background-color: #005a3e;
+}
+
+.historico-tabela-veiculos {
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  color: var(--text-dark);
+}
+
+.tabela-historico-veiculos {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-dark);
+}
+
+.tabela-historico-veiculos th,
+.tabela-historico-veiculos td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  color: var(--text-dark);
+}
+
+.tabela-historico-veiculos th {
+  background: var(--primary-color);
+  color: white;
+}
+
+.tabela-historico-veiculos tr:hover {
+  background: #eaeaea;
+}
+
+.btn-editar-veiculo,
+.btn-excluir-veiculo {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-editar-veiculo {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-editar-veiculo:hover {
+  background-color: #0056b3;
+}
+
+.btn-excluir-veiculo {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-excluir-veiculo:hover {
+  background-color: #a71d2a;
+}

@@ -1,0 +1,175 @@
+/* ============================= */
+/* ===== VARIÁVEIS GLOBAIS ===== */
+/* ============================= */
+:root {
+  --border-color: #ccc;
+  --accent-color: #007b57;
+  --warning-color: #f2b200;
+  --text-light: #fff;
+  --text-dark: #222;
+}
+
+/* ============================= */
+/* ===== ESTILOS MORADOR ======= */
+/* ============================= */
+
+/* ===== Cadastro ===== */
+.form-cadastro-morador {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+}
+
+.form-group-morador {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-morador label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group-morador input,
+.form-group-morador select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-light);
+}
+
+.endereco-group-morador {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.form-actions-morador {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-salvar-morador {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-salvar-morador:hover {
+  background-color: #005a3e;
+}
+
+.btn-cancelar-morador {
+  background-color: var(--warning-color);
+  color: var(--text-dark);
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-cancelar-morador:hover {
+  background-color: #d8a200;
+}
+
+/* ===== Histórico ===== */
+.historico-container-morador {
+  background: #b0b0b0;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 1000px;
+  color: var(--text-dark);
+}
+
+.historico-filtros-morador {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.historico-filtros-morador input,
+.historico-filtros-morador select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background: white;
+  color: var(--text-dark);
+}
+
+.historico-filtros-morador button {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--accent-color);
+  color: white;
+  cursor: pointer;
+}
+
+.historico-filtros-morador button:hover {
+  background-color: #005a3e;
+}
+
+.historico-tabela-morador {
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  color: var(--text-dark);
+}
+
+.tabela-historico-morador {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-dark);
+}
+
+.tabela-historico-morador th,
+.tabela-historico-morador td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  color: var(--text-dark);
+}
+
+.tabela-historico-morador th {
+  background: var(--primary-color, #072241);
+  color: white;
+}
+
+.tabela-historico-morador tr:hover {
+  background: #eaeaea;
+}
+
+.btn-editar-morador,
+.btn-excluir-morador {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-editar-morador {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-editar-morador:hover {
+  background-color: #0056b3;
+}
+
+.btn-excluir-morador {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-excluir-morador:hover {
+  background-color: #a71d2a;
+}

@@ -1,0 +1,175 @@
+/* ============================= */
+/* ===== VARIÁVEIS GLOBAIS ===== */
+/* ============================= */
+:root {
+  --border-color: #ccc;
+  --accent-color: #007b57;
+  --warning-color: #f2b200;
+  --text-light: #fff;
+  --text-dark: #222;
+}
+
+
+/* ============================= */
+/* ===== CADASTRO RESERVA ===== */
+/* ============================= */
+
+/* ===== Cadastro de Reservas ===== */
+.form-cadastro-reserva {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+}
+
+.form-group-reserva {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-reserva label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group-reserva input,
+.form-group-reserva select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-light);
+}
+
+.form-actions-reserva {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-salvar-reserva {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-salvar-reserva:hover {
+  background-color: #005a3e;
+}
+
+.btn-cancelar-reserva {
+  background-color: var(--warning-color);
+  color: var(--text-dark);
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-cancelar-reserva:hover {
+  background-color: #d8a200;
+}
+
+
+/* ============================= */
+/* ===== HISTÓRICO RESERVA ===== */
+/* ============================= */
+
+/* ===== Histórico de Reservas ===== */
+.historico-container-reserva {
+  background: #b0b0b0;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 1000px;
+  color: var(--text-dark);
+}
+
+.historico-filtros-reserva {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.historico-filtros-reserva input,
+.historico-filtros-reserva select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background: white;
+  color: var(--text-dark);
+}
+
+.historico-filtros-reserva button {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--accent-color);
+  color: white;
+  cursor: pointer;
+}
+
+.historico-filtros-reserva button:hover {
+  background-color: #005a3e;
+}
+
+.historico-tabela-reserva {
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  color: var(--text-dark);
+}
+
+.tabela-historico-reserva {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-dark);
+}
+
+.tabela-historico-reserva th,
+.tabela-historico-reserva td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  color: var(--text-dark);
+}
+
+.tabela-historico-reserva th {
+  background: var(--primary-color, #072241);
+  color: white;
+}
+
+.tabela-historico-reserva tr:hover {
+  background: #eaeaea;
+}
+
+.btn-editar-reserva,
+.btn-excluir-reserva {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-editar-reserva {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-editar-reserva:hover {
+  background-color: #0056b3;
+}
+
+.btn-excluir-reserva {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-excluir-reserva:hover {
+  background-color: #a71d2a;
+}

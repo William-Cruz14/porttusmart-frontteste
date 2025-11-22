@@ -1,0 +1,220 @@
+/* ============================= */
+/* ===== ESTILOS MENSAGEM ====== */
+/* ============================= */
+
+/* ===== Caixa de Mensagens ===== */
+.historico-container-mensagem {
+  background: #b0b0b0;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 1000px;
+  color: var(--text-dark);
+}
+
+.historico-filtros-mensagem {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.historico-filtros-mensagem input,
+.historico-filtros-mensagem select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background: white;
+  color: var(--text-dark);
+}
+
+.historico-filtros-mensagem button {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--accent-color);
+  color: white;
+  cursor: pointer;
+}
+
+.historico-filtros-mensagem button:hover {
+  background-color: #005a3e;
+}
+
+.historico-tabela-mensagem {
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  color: var(--text-dark);
+}
+
+.tabela-historico-mensagem {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-dark);
+}
+
+.tabela-historico-mensagem th,
+.tabela-historico-mensagem td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  color: var(--text-dark);
+}
+
+.tabela-historico-mensagem th {
+  background: var(--primary-color, #072241);
+  color: white;
+}
+
+.tabela-historico-mensagem tr:hover {
+  background: #eaeaea;
+}
+
+/* ===== Botões de ação ===== */
+.btn-visualizar-mensagem,
+.btn-responder-mensagem {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-visualizar-mensagem {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-visualizar-mensagem:hover {
+  background-color: #0056b3;
+}
+
+.btn-responder-mensagem {
+  background-color: var(--warning-color, #ffc107);
+  color: var(--text-dark);
+}
+
+.btn-responder-mensagem:hover {
+  background-color: #d8a200;
+}
+
+/* ============================= */
+/* ======= MODAL GENÉRICO ====== */
+/* ============================= */
+
+.modal-mensagem {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-conteudo-mensagem {
+  background: #ffffff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 95%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.25s ease-out;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-15px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-conteudo-mensagem h2 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: var(--primary-color, #072241);
+}
+
+.modal-conteudo-mensagem p {
+  margin: 8px 0;
+  color: var(--text-dark);
+}
+
+.modal-info-mensagem {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.modal-conteudo-mensagem textarea {
+  width: 100%;
+  height: 100px;
+  resize: none;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  color: var(--text-dark);
+}
+
+.modal-botoes-mensagem {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-enviar-mensagem {
+  background-color: var(--accent-color, #007bff);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-enviar-mensagem:hover {
+  background-color: #005a3e;
+}
+
+.btn-cancelar-mensagem {
+  background-color: #ccc;
+  color: #333;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-cancelar-mensagem:hover {
+  background-color: #b3b3b3;
+}
+
+/* ============================= */
+/* == MODAL VISUALIZAR EXTRA == */
+/* ============================= */
+
+#modalVisualizarMensagem .modal-conteudo-mensagem {
+  max-width: 550px;
+}
+
+#modalVisualizarMensagem #visualizarCorpo {
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 6px;
+  min-height: 80px;
+  font-size: 0.95rem;
+  color: #333;
+  white-space: pre-wrap;
+}
+
+#modalVisualizarMensagem h2 {
+  color: var(--primary-color, #072241);
+  border-bottom: 2px solid var(--primary-color, #072241);
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}

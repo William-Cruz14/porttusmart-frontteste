@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PorttuSmart - Cadastre-se</title>
+  <link rel="stylesheet" href="../assets/css/login.css">
+
+  <!-- reCAPTCHA v2 -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Logo e título -->
+    <div class="header">
+      <img src="../assets/img/logoinit.jpeg" alt="Logo PorttuSmart" class="logo">
+      <h1 class="titulo-logo">PorttuSmart</h1>
+    </div>
+
+    <!-- Subtítulo -->
+    <h2 class="subtitulo">Cadastre-se</h2>
+    <p>Preencha os dados abaixo para criar sua conta.</p>
+
+    <!-- Formulário de cadastro -->
+    <form class="login-form">
+      <input type="text" name="nome" placeholder="Nome completo" required>
+      <input type="text" name="cpf" placeholder="CPF" required>
+      <input type="tel" name="telefone" placeholder="Telefone" required>
+      <input type="email" name="email" placeholder="E-mail" required>
+
+      <!-- Novo campo: código do condomínio -->
+      <input type="text" name="codigoCondominio" placeholder="Digite o código do condomínio" required>
+
+      <!-- Campos de apartamento e bloco -->
+      <div class="endereco-group">
+        <input type="text" name="bloco" placeholder="Bloco" required>
+        <input type="text" name="apartamento" placeholder="Apartamento" required>
+      </div>
+
+      <!-- Campo de senha -->
+      <input type="password" name="senha" placeholder="Senha" required>
+
+      <!-- reCAPTCHA -->
+      <div class="g-recaptcha" data-sitekey="6Ld0XQssAAAAAOisVdWWEvGONekE0uCBODWwgQPg">
+      </div>
+
+      <!-- Botão de envio -->
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <!-- Links extras -->
+    <div class="links">
+      <a href="../index.html">Voltar ao login</a>
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+      <p>Política de privacidade</p>
+      <p>Acordo de confidencialidade</p>
+    </footer>
+  </div>
+
+  <script src="../assets/js/cadastro.js"></script>
+
+  <!-- ========================================================= -->
+  <!--     AUTO-PREENCHER CAMPOS COM DADOS DO GOOGLE LOGIN       -->
+  <!-- ========================================================= -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Pega o objeto salvo pelo loginsocial.js
+      const user = JSON.parse(localStorage.getItem('user'));
+
+      if (user) {
+        if (user.name) document.querySelector("input[name='nome']").value = user.name;
+        if (user.email) document.querySelector("input[name='email']").value = user.email;
+        // Se tiver outros campos vindos do Google, pode preencher aqui também
+      }
+      
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Gestor</title>
+  <link rel="stylesheet" href="../assets/css/homesindico.css" />
+  
+  <link rel="stylesheet" href="../assets/css/telassindico/sindico_morador.css" />
+  <link rel="stylesheet" href="../assets/css/telassindico/sindico_visitante.css" />
+  <link rel="stylesheet" href="../assets/css/telassindico/sindico_veiculo.css" />
+  <link rel="stylesheet" href="../assets/css/telassindico/sindico_pedido.css" />
+  <link rel="stylesheet" href="../assets/css/telassindico/sindico_reserva.css" />
+  <link rel="stylesheet" href="../assets/css/telassindico/sindico_comunicado.css" />
+  <link rel="stylesheet" href="../assets/css/telassindico/sindico_ocorrencia.css" />
+  <link rel="stylesheet" href="../assets/css/telassindico/sindico_mensagens.css" />
+  <link rel="stylesheet" href="../assets/css/telassindico/sindico_financeiro.css" />
+  <link rel="stylesheet" href="../assets/css/telassindico/sindico_senha.css" />
+</head>
+
+<body>
+
+  <!-- Header / Topbar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="mobile-toggle" aria-label="Abrir menu">☰</button>
+      <a href="homesindico.html">
+        <img src="../assets/img/logoinit.jpeg" alt="Logo PorttuSmart" class="logo">
+      </a>
+    </div>
+
+    <div class="topbar-right">
+      <button class="icon-btn" aria-label="buscar">🔍</button>
+
+      <!-- 🔔 Notificações -->
+      <div class="notification-wrapper">
+        <button id="notification-bell" class="icon-btn" aria-label="notificações">
+          🔔
+          <div id="notification-count"></div>
+        </button>
+        <div id="notification-dropdown" class="notification-dropdown">
+          <p class="no-notifications">Nenhuma nova solicitação.</p>
+        </div>
+      </div>
+
+      <!-- ⋮ Menu -->
+      <button class="icon-btn" aria-label="menu" id="menuButton">⋮</button>
+    </div>
+
+    <!-- Caixa de opções (menu suspenso) -->
+    <div class="menu-dropdown" id="menuDropdown">
+      <a href="#">Alterar Senha</a>
+      <a href="../pages/logout.html" id="logoutBtn">Sair</a>
+    </div>
+  </header>
+
+  <!-- Área principal (sidebar + conteúdo) -->
+  <div class="main">
+    <!-- Menu lateral -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="avatar">👤</div>
+        <p class="greeting">Olá, Gestor</p>
+      </div>
+
+      <nav class="menu-fixed" id="menuCondominios">
+        <p class="menu-title">Meus Condomínios</p>
+        <!-- Condomínios serão inseridos dinamicamente aqui -->
+        <div id="listaCondominios"></div>
+      </nav>
+
+      <!-- Menu rolável (itens restantes com submenus) -->
+      <nav class="menu-scroll" aria-label="menu principal">
+        
+        <div class="menu-item" id="menuMoradores">
+          <input type="checkbox" id="moradores-toggle" />
+          <label for="moradores-toggle" class="item">Moradores ▾</label>
+          <div class="submenu moradores">
+            <div class="subitem">Cadastro de moradores</div>
+            <div class="subitem">Histórico de moradores</div>
+          </div>
+        </div>
+
+        <div class="menu-item" id="menuVisitantes">
+          <input type="checkbox" id="visitantes-toggle" />
+          <label for="visitantes-toggle" class="item">Visitantes ▾</label>
+          <div class="submenu">
+            <div class="subitem">Cadastro de visitantes</div>
+            <div class="subitem">Controle de entradas e saídas</div>
+          </div>
+        </div>
+
+        <div class="menu-item" id="menuVeiculos">
+          <input type="checkbox" id="veiculos-toggle" />
+          <label for="veiculos-toggle" class="item">Veículos ▾</label>
+          <div class="submenu">
+            <div class="subitem">Cadastro de veículos de moradores</div>
+            <div class="subitem">Histórico de veículos</div>
+          </div>
+        </div>
+
+        <div class="menu-item" id="menuEntregas">
+          <input type="checkbox" id="entregas-toggle" />
+          <label for="entregas-toggle" class="item">Entregas ▾</label>
+          <div class="submenu">
+            <div class="subitem">Cadastro de entregas</div>
+            <div class="subitem">Histórico de entregas</div>
+          </div>
+        </div>
+
+        <div class="menu-item" id="menuReservas">
+          <input type="checkbox" id="areas-toggle" />
+          <label for="areas-toggle" class="item">Áreas Comuns ▾</label>
+          <div class="submenu">
+            <div class="subitem">Cadastro de reservas</div>
+            <div class="subitem">Histórico de reservas</div>
+          </div>
+        </div>
+
+        <div class="menu-item" id="menuFinanceiro">
+          <input type="checkbox" id="financeiro-toggle" />
+          <label for="financeiro-toggle" class="item">Financeiro ▾</label>
+          <div class="submenu">
+            <div class="subitem">Cadastro de lançamentos</div>
+            <div class="subitem">Histórico de lançamentos</div>
+          </div>
+        </div>
+
+
+        <div class="menu-item" id="menuOcorrencias">
+          <input type="checkbox" id="ocorrencias-toggle" />
+          <label for="ocorrencias-toggle" class="item">Ocorrências / Manutenção ▾</label>
+          <div class="submenu">
+            <div class="subitem">Registrar ocorrência</div>
+            <div class="subitem">Histórico de ocorrências</div>
+          </div>
+        </div>
+
+        <div class="menu-item" id="menuComunicados">
+          <input type="checkbox" id="comunicados-toggle" />
+          <label for="comunicados-toggle" class="item">Comunicados / Documentos ▾</label>
+          <div class="submenu">
+            <div class="subitem">Novo comunicado</div>
+            <div class="subitem">Histórico de comunicados</div>
+            <div class="subitem">Cadastro de documentos</div>
+            <div class="subitem">Documentos do condomínio</div>
+          </div>
+        </div>
+
+
+        <div class="menu-item" id="menuMensagens">
+          <input type="checkbox" id="mensagens-toggle" />
+          <label for="mensagens-toggle" class="item">Mensagens / Reclamações ▾</label>
+          <div class="submenu">
+            <div class="subitem">Caixa de mensagens</div>
+          </div>
+        </div>
+
+      </nav>
+    </aside>
+
+    <!-- Conteúdo principal -->
+    <main class="content">
+      <div class="content-top">
+        <h1>Facilitamos a vida de administradores, síndicos profissionais e condôminos.</h1>
+        <p class="lead">Utilizamos a mais moderna tecnologia em nuvem e as melhores ferramentas para atender melhor
+          todos os tipos de condomínios.</p>
+      </div>
+
+      <!-- Cards no rodapé da área de conteúdo -->
+      <div class="bottom-cards">
+        <div class="card seguranca">
+          <h3>Segurança</h3>
+          <p>Garantimos total sigilo de seus dados. Nenhuma informação é compartilhada.</p>
+        </div>
+        <div class="card suporte">
+          <h3>Suporte</h3>
+          <p>Oferecemos auxílio ilimitado. Conte com consultores especialistas.</p>
+        </div>
+        <div class="card agilidade">
+          <h3>Agilidade</h3>
+          <p>Dispomos de relatórios dinâmicos, controle de consumo e muito mais.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/js/mobile.js"></script>
+  <script src="../assets/js/apiApartments.js"></script>
+
+  <!-- 🚚 Scripts do módulo de Moradores -->
+  <script src="../assets/js/telassindico/morador/apiMoradores.js"></script>
+  <script src="../assets/js/telassindico/morador/telasMoradores.js"></script>
+  <script src="../assets/js/telassindico/morador/main.js"></script>
+
+  <!-- 🚚 Scripts do módulo de Visitantes -->
+  <script src="../assets/js/telassindico/visitante/apiVisitante.js"></script>
+  <script src="../assets/js/telassindico/visitante/telasVisitante.js"></script>
+  <script src="../assets/js/telassindico/visitante/main.js"></script>
+
+  <!-- 🚚 Scripts do módulo de Veiculos -->
+  <script src="../assets/js/telassindico/veiculos/apiVeiculos.js"></script>
+  <script src="../assets/js/telassindico/veiculos/telasVeiculos.js"></script>
+  <script src="../assets/js/telassindico/veiculos/main.js"></script>
+
+  <!-- 🚚 Scripts do módulo de Entregas -->
+  <script src="../assets/js/telassindico/pedidos/apiPedidos.js"></script>
+  <script src="../assets/js/telassindico/pedidos/telasPedidos.js"></script>
+  <script src="../assets/js/telassindico/pedidos/main.js"></script>
+
+  <!-- 🚚 Scripts do módulo de Reservas(Agendamentos) -->
+  <script src="../assets/js/telassindico/reservas/apiReservas.js"></script>
+  <script src="../assets/js/telassindico/reservas/telasReservas.js"></script>
+  <script src="../assets/js/telassindico/reservas/main.js"></script>
+
+  <!-- 🚚 Scripts do módulo de Financeiro -->
+  <script src="../assets/js/telassindico/financeiro/apiFinanceiro.js"></script>
+  <script src="../assets/js/telassindico/financeiro/telasFinanceiro.js"></script>
+  <script src="../assets/js/telassindico/financeiro/main.js"></script>
+
+      <!-- 🚚 Scripts do módulo de Ocorrencia -->
+  <script src="../assets/js/telassindico/ocorrencia/apiOcorrencia.js"></script>
+  <script src="../assets/js/telassindico/ocorrencia/telaOcorrencia.js"></script>
+  <script src="../assets/js/telassindico/ocorrencia/main.js"></script>
+
+    <!-- 🚚 Scripts do módulo de Comunicados -->
+  <script src="../assets/js/telassindico/comunicados/apiComunicados.js"></script>
+  <script src="../assets/js/telassindico/comunicados/telasComunidados.js"></script>
+  <script src="../assets/js/telassindico/comunicados/main.js"></script>
+
+    <!-- 🚚 Scripts do módulo de Mensagens -->
+  <script src="../assets/js/telassindico/mensagens/apiMensagens.js"></script>
+  <script src="../assets/js/telassindico/mensagens/telasMensagens.js"></script>
+  <script src="../assets/js/telassindico/mensagens/main.js"></script>
+
+    <!-- 🚚 Scripts do módulo de troca de senha -->
+  <script src="../assets/js/telassindico/senha/apiSenha.js"></script>
+  <script src="../assets/js/telassindico/senha/telasSenha.js"></script>
+  <script src="../assets/js/telassindico/senha/main.js"></script>
+
+
+  <script src="../assets/js/sindico_menu.js"></script>
+  <script src="../assets/js/logout.js"></script>
+  <script src="../assets/js/sindico_condominios.js"></script>
+  <script src="../assets/js/sindico_notificacoes.js"></script>
+
+  <!-- Script do menu suspenso -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const menuButton = document.getElementById("menuButton");
+      const dropdown = document.getElementById("menuDropdown");
+
+      // Abre/fecha menu ao clicar nos três pontos
+      menuButton.addEventListener("click", function (e) {
+        e.stopPropagation();
+        dropdown.classList.toggle("menu-open");
+      });
+
+      // Fecha o menu ao clicar fora
+      document.addEventListener("click", function (e) {
+        if (!dropdown.contains(e.target) && e.target !== menuButton) {
+          dropdown.classList.remove("menu-open");
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

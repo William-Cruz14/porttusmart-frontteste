@@ -1,0 +1,172 @@
+/* ============================= */
+/* ===== VARIÁVEIS GLOBAIS ===== */
+/* ============================= */
+:root {
+  --border-color: #ccc;
+  --accent-color: #007b57;
+  --warning-color: #f2b200;
+  --text-light: #fff;
+  --text-dark: #222;
+}
+
+/* ===== Cadastro Financeiro ===== */
+.form-cadastro-lancamento {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+}
+
+.form-group-lancamento {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-lancamento label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group-lancamento input,
+.form-group-lancamento select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background: rgba(255,255,255,0.1);
+  color: var(--text-light);
+}
+
+.form-group-lancamento input[type="file"] {
+  padding: 5px;
+}
+
+.form-actions-lancamento {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-salvar-lancamento {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-salvar-lancamento:hover {
+  background-color: #005a3e;
+}
+
+.btn-cancelar-lancamento {
+  background-color: var(--warning-color);
+  color: var(--text-dark);
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-cancelar-lancamento:hover {
+  background-color: #d8a200;
+}
+
+/* ============================= */
+/* ===== HISTÓRICO FINANCEIRO ==== */
+/* ============================= */
+
+.historico-container-lancamento {
+  background: #b0b0b0;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 1000px;
+  color: var(--text-dark);
+}
+
+.historico-filtros-lancamento {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.historico-filtros-lancamento input,
+.historico-filtros-lancamento select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background: white;
+  color: var(--text-dark);
+}
+
+.historico-filtros-lancamento button {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--accent-color);
+  color: white;
+  cursor: pointer;
+}
+
+.historico-filtros-lancamento button:hover {
+  background-color: #005a3e;
+}
+
+.historico-tabela-lancamento {
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  color: var(--text-dark);
+}
+
+.tabela-historico-lancamento {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-dark);
+}
+
+.tabela-historico-lancamento th,
+.tabela-historico-lancamento td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  color: var(--text-dark);
+}
+
+.tabela-historico-lancamento th {
+  background: var(--primary-color, #072241); /* igual moradores */
+  color: white;
+}
+
+.tabela-historico-lancamento tr:hover {
+  background: #eaeaea;
+}
+
+.btn-editar-lancamento,
+.btn-excluir-lancamento {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-editar-lancamento {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-editar-lancamento:hover {
+  background-color: #0056b3;
+}
+
+.btn-excluir-lancamento {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-excluir-lancamento:hover {
+  background-color: #a71d2a;
+}
