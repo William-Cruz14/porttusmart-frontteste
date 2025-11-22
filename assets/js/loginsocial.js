@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ORIGENS PERMITIDAS (Para segurança do postMessage)
     const allowedOrigins = [
         "http://127.0.0.1:5500",
+        "https://www.porttusmart.tech",
         "http://localhost:5500",
         "https://site-condomino-piv.vercel.app",
         "https://d336vgy098gi03.cloudfront.net",
