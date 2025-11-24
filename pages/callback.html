@@ -43,31 +43,28 @@
         const error = urlParams.get('error');
 
         // ORIGENS PERMITIDAS (3 AMBIENTES)
-        const allowedOrigins = [
-            "http://127.0.0.1:5500",
-            "https://www.porttusmart.tech",
-            "https://site-condomino-piv.vercel.app",
-            "https://d336vgy098gi03.cloudfront.net"
-        ];
+        const targetOrigin = window.location.origin;
 
-        // Determina dinamicamente para qual origin responder
-        const openerOrigin = allowedOrigins.find(origin =>
-            document.referrer.startsWith(origin)
-        ) || "https://www.porttusmart.tech"; // Default seguro
+        console.log("Origin da janela de callback:", targetOrigin);
 
-        if (error) {
+        if (!window.opener) {
+            console.error('Window opener não encontrado (pop-up pode ter sido bloqueado)');
+    
+        }
+
+        else if (error) {
             console.error('Erro do Google:', error);
             window.opener.postMessage({
                 type: 'OAUTH_ERROR',
                 error: error
-            }, openerOrigin);
+            }, targetOrigin);
             window.close();
         } 
         else if (authCode) {
             window.opener.postMessage({
                 type: 'OAUTH_CODE',
                 code: authCode
-            }, openerOrigin);
+            }, targetOrigin);
             window.close();
         } 
         else {

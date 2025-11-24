@@ -4,26 +4,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // IMPORTANTE: Esta URL deve estar cadastrada no Google Cloud Console
     const redirectUri = window.location.origin + "/pages/callback.html";
 
+
     // ORIGENS PERMITIDAS (Para segurança do postMessage)
-    const allowedOrigins = [
-        "http://127.0.0.1:5500",
-        "https://www.porttusmart.tech",
-        "http://localhost:5500",
-        "https://site-condomino-piv.vercel.app",
-        "https://d336vgy098gi03.cloudfront.net",
-        "https://api.porttusmart.tech"
-    ];
+    
+    console.log("url de redirecionamento:", redirectUri);
 
     // Escuta mensagens do popup
     window.addEventListener('message', function(event) {
         // Verifica se a origem é confiável
-        const isAllowed = allowedOrigins.some(origin => event.origin.startsWith(origin));
-        
-        if (!isAllowed) {
-            // Opcional: Descomentar se quiser debug de origens
-            // console.warn("Origin não permitido ou diferente:", event.origin);
-            return; 
+        if (event.origin !== window.location.origin) {
+            console.warn("Origem não confiável:", event.origin);
+            return;
         }
+
+        console.log("Mensagem recebida de:", event.origin);
 
         if (event.data.type === 'OAUTH_CODE') {
             handleOAuthCode(event.data.code);
@@ -74,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     code: code,
-                    callback_url: redirectUri
+                    redirect_uri: redirectUri
                 })
             });
 
