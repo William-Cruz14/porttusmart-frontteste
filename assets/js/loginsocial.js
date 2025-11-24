@@ -73,7 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    code: code
+                    code: code,
+                    callback_url: redirectUri
                 })
             });
 
