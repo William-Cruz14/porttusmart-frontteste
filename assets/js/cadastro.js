@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (accessToken && storedUserJson) {
         try {
             const googleUser = JSON.parse(storedUserJson);
-            console.log("Preenchendo formulário com dados do Google:", googleUser);
+            //console.log("Preenchendo formulário com dados do Google:", googleUser);
 
             // 1. Preenche o NOME (Chave: "name")
             if (googleUser.name && form.nome) {
