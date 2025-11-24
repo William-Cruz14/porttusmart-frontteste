@@ -13,7 +13,7 @@ async function pegarDadosMorador() {
     const data = await res.json();
 
     // 🔹 Debug completo
-    console.log("Dados completos do morador:", data);
+    //console.log("Dados completos do morador:", data);
 
     // ✅ Corrigido: pegar o primeiro item do array
     const morador = data[0];
@@ -24,9 +24,9 @@ async function pegarDadosMorador() {
       code_condominium: morador.apartment?.condominium || null,
     };
 
-    console.log("Bloco:", moradorInfo.block);
-    console.log("Apartamento:", moradorInfo.apartment);
-    console.log("Código do condomínio:", moradorInfo.code_condominium);
+    //console.log("Bloco:", moradorInfo.block);
+    //console.log("Apartamento:", moradorInfo.apartment);
+    //console.log("Código do condomínio:", moradorInfo.code_condominium);
 
     localStorage.setItem("moradorInfo", JSON.stringify(moradorInfo));
 
