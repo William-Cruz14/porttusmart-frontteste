@@ -36,7 +36,7 @@
         <p>Processando login...</p>
     </div>
 
-    <script>
+   <script>
         // Pega o código de autorização da URL
         const urlParams = new URLSearchParams(window.location.search);
         const authCode = urlParams.get('code');
@@ -50,21 +50,68 @@
             "https://www.porttusmart.tech",
         ];
 
-        // Determina dinamicamente para qual origin responder
-        const openerOrigin = allowedOrigins.find(origin =>
-            document.referrer.startsWith(origin)
-        ) || "http://127.0.0.1:5500"; // fallback seguro
+        // 1️⃣ Tenta pegar origin do opener
+        let openerOrigin = null;
+        
+        if (window.opener && window.opener.location) {
+            try {
+                // Acessa diretamente o origin do opener (só funciona se mesma origem ou CORS ok)
+                openerOrigin = window.opener.location.origin;
+            } catch (e) {
+                console.warn('Não foi possível acessar window.opener.location.origin (CORS)', e);
+            }
+        }
+
+        // 2️⃣ Se não conseguiu, tenta document.referrer
+        if (!openerOrigin && document.referrer) {
+            openerOrigin = allowedOrigins.find(origin =>
+                document.referrer.startsWith(origin)
+            );
+        }
+
+        // 3️⃣ Se ainda não conseguiu, tenta state parameter (se você passar na URL OAuth)
+        if (!openerOrigin) {
+            const state = urlParams.get('state');
+            if (state) {
+                try {
+                    const stateData = JSON.parse(atob(state)); // decodifica base64
+                    if (stateData.origin && allowedOrigins.includes(stateData.origin)) {
+                        openerOrigin = stateData.origin;
+                    }
+                } catch (e) {
+                    console.warn('State inválido:', e);
+                }
+            }
+        }
+
+        // 4️⃣ Fallback final baseado no hostname atual
+        if (!openerOrigin) {
+            const currentHost = window.location.hostname;
+            if (currentHost === '127.0.0.1' || currentHost === 'localhost') {
+                openerOrigin = "http://127.0.0.1:5500";
+            } else if (currentHost.includes('vercel.app')) {
+                openerOrigin = "https://site-condomino-piv.vercel.app";
+            } else if (currentHost.includes('cloudfront.net')) {
+                openerOrigin = "https://d128i9hqy82wx1.cloudfront.net";
+            } else if (currentHost.includes('porttusmart.tech')) {
+                openerOrigin = "https://www.porttusmart.tech";
+            } else {
+                openerOrigin = allowedOrigins[0]; // último fallback
+            }
+        }
+
+        console.log('Origin detectada:', openerOrigin);
 
         if (error) {
             console.error('Erro do Google:', error);
-            window.opener.postMessage({
+            window.opener?.postMessage({
                 type: 'OAUTH_ERROR',
                 error: error
             }, openerOrigin);
             window.close();
         } 
         else if (authCode) {
-            window.opener.postMessage({
+            window.opener?.postMessage({
                 type: 'OAUTH_CODE',
                 code: authCode
             }, openerOrigin);
