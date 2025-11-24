@@ -62,7 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Handle do código OAuth
     async function handleOAuthCode(code) {
         try {
-            console.log("Código recebido:", code);
 
             googleBtn.innerHTML = '<span>Processando...</span>';
             googleBtn.disabled = true;
@@ -78,8 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             const data = await response.json();
-
-            console.log("Status HTTP:", response.status);
             
             if (response.ok) {
                 handleLoginSuccess(data);
@@ -110,7 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- AQUI ESTÁ A LÓGICA AJUSTADA ---
 function handleLoginSuccess(data) {
-    console.log("📥 JSON Recebido do Backend:", data);
 
     // 1. Armazenar Tokens (Chaves: "access" e "refresh")
     if (data.access) {

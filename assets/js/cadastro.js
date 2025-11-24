@@ -97,10 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
             headers: headers,
             body: JSON.stringify(userData)
           });
-
-          console.log("Payload enviado:", userData);
-    
-          console.log("📡 Status da resposta:", response.status);
     
           if (response.ok) {
             

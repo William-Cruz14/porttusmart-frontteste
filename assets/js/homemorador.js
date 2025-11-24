@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let data = await response.json();
     if (Array.isArray(data)) data = data[0];
-    console.log("👤 Dados do morador:", data);
+    //console.log("👤 Dados do morador:", data);
 
     // 2️⃣ Atualiza o nome do morador
     const greeting = document.getElementById("moradorNome");
