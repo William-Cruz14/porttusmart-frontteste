@@ -66,6 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
             googleBtn.innerHTML = '<span>Processando...</span>';
             googleBtn.disabled = true;
 
+            //console.log("Código OAuth recebido:", code);
+
             // Backend simplificado: Não enviamos mais callback_url no JSON, 
             // pois o backend agora resolve isso internamente (fixo ou .env).
             const response = await fetch('https://api.porttusmart.tech/api/v1/auth/google/', {
@@ -73,6 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     code: code,
+                    callback_url: redirectUri
                 })
             });
 

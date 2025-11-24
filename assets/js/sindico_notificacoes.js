@@ -3,6 +3,7 @@ const API_URL_NOTIFICACOES = "https://api.porttusmart.tech/api/v1/users/persons/
 const TOKEN_NOTIFICACOES = localStorage.getItem("access_token");
 
 // Elementos
+// Elementos
 const bellBtn = document.getElementById("notification-bell");
 const dropdown = document.getElementById("notification-dropdown");
 const notificationCount = document.getElementById("notification-count");
