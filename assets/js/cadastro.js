@@ -2,7 +2,40 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector(".login-form");
   
     if (!form) return;
-  
+
+    const accessToken = localStorage.getItem('access_token'); 
+    const storedUserJson = localStorage.getItem('google_user_data');
+
+    if (accessToken && storedUserJson) {
+        try {
+            const googleUser = JSON.parse(storedUserJson);
+            console.log("Preenchendo formulário com dados do Google:", googleUser);
+
+            // 1. Preenche o NOME (Chave: "name")
+            if (googleUser.name && form.nome) {
+                form.nome.value = googleUser.name;
+            }
+
+            // 2. Preenche o EMAIL e BLOQUEIA (Chave: "email")
+            // Importante: O backend valida se o email do token bate com o do form.
+            if (googleUser.email && form.email) {
+                form.email.value = googleUser.email;
+                form.email.readOnly = true; // Bloqueia digitação
+                form.email.style.backgroundColor = "#e9ecef"; // Visual cinza
+                form.email.style.cursor = "not-allowed";
+                
+                // Adiciona um aviso visual para o usuário saber por que não pode mudar
+                const emailHint = document.createElement("small");
+                emailHint.style.color = "#666";
+                emailHint.innerText = "E-mail vinculado à sua conta Google.";
+                form.email.parentNode.appendChild(emailHint);
+            }
+
+        } catch (e) {
+            console.error("Erro ao ler dados do localStorage:", e);
+        }
+    }
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
   
@@ -30,17 +63,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       // Monta o JSON conforme o backend espera
       const userData = {
-        name: nome,
-        email: email,
-        cpf: cpf,
-        password: senha,
-        telephone: telefone,
-        user_type: "resident",
-        number_apartment: numApt,
-        block_apartment: bloco,
-        code_condominium: codigoCondominio,
-        recaptcha_token: recaptchaResponse 
-      };
+            name: form.nome.value.trim(),
+            email: form.email.value.trim(), // Vai enviar o email do Google (bloqueado)
+            cpf: form.cpf.value.trim(),
+            password: form.senha.value.trim(), // Backend vai ignorar se for update sem senha, mas enviamos
+            telephone: form.telefone.value.trim(),
+            user_type: "resident",
+            number_apartment: parseInt(form.apartamento.value.trim()) || null,
+            block_apartment: form.bloco.value.trim(),
+            code_condominium: form.codigoCondominio.value.trim(),
+            recaptcha_token: recaptchaResponse
+        };
   
       console.log("📤 Enviando dados para o servidor...");
   
@@ -59,61 +92,48 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   
       try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: headers,
-          body: JSON.stringify(userData)
-        });
+          const response = await fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(userData)
+          });
 
-        console.log("Payload enviado:", userData);
-  
-        console.log("📡 Status da resposta:", response.status);
-  
-        if (response.ok) {
-          
-          // SUCESSO: Limpa tudo e redireciona para LOGIN
-          localStorage.removeItem('access_token');
-          localStorage.removeItem('refresh_token');
-          
-          // Limpa flag de novo usuário
-          const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
-          if (storedUser.is_new_user) {
-             storedUser.is_new_user = false;
-             localStorage.setItem('user', JSON.stringify(storedUser));
-          }
-  
-          form.reset();
-          grecaptcha.reset();
-  
-          // AVISO IMPORTANTE DA REGRA DE NEGÓCIO
-          alert("✅ Solicitação de cadastro enviada com sucesso!\n\nSeu perfil está em análise pelo síndico. Você receberá um e-mail assim que seu acesso for liberado.");
-          
-          // Redireciona para o LOGIN
-          window.location.href = "../index.html";
-          
+          console.log("Payload enviado:", userData);
+    
+          console.log("📡 Status da resposta:", response.status);
+    
+          if (response.ok) {
+            
+            // SUCESSO: Limpa tudo e redireciona para LOGIN
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            localStorage.removeItem('google_user_data');
+            
+            // Limpa flag de novo usuário
+            const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+            if (storedUser.is_new_user) {
+              storedUser.is_new_user = false;
+              localStorage.setItem('user', JSON.stringify(storedUser));
+            }
+    
+            form.reset();
+            grecaptcha.reset();
+    
+            // AVISO IMPORTANTE DA REGRA DE NEGÓCIO
+            alert("✅ Solicitação de cadastro enviada com sucesso!\n\nSeu perfil está em análise pelo síndico. Você receberá um e-mail assim que seu acesso for liberado.");
+            
+            // Redireciona para o LOGIN
+            window.location.href = "../index.html";
+            
         } else {
           // Tratamento de Erros
-          let errorText = "Erro desconhecido";
-          try {
-            const errorData = await response.json();
-            console.log("🧾 Erro JSON:", errorData);
-            
-            if (errorData.detail) {
-                errorText = errorData.detail;
-            } else if (typeof errorData === 'object') {
-                // Pega a primeira mensagem de erro
-                const firstKey = Object.keys(errorData)[0];
-                const msg = Array.isArray(errorData[firstKey]) ? errorData[firstKey][0] : errorData[firstKey];
-                errorText = `${firstKey}: ${msg}`;
-            } else {
-                errorText = JSON.stringify(errorData);
-            }
-          } catch {
-            const textData = await response.text();
-            errorText = "Erro interno no servidor ou formato inválido.";
-          }
-          alert("❌ Não foi possível concluir o cadastro:\n" + errorText);
+          const errorData = await response.json();
+          console.error("Erro:", errorData);
+          let msg = errorData.detail || JSON.stringify(errorData);
+          alert("❌ Erro ao salvar dados: " + msg);
+          grecaptcha.reset();
         }
+
       } catch (error) {
         console.error("🚨 Erro de rede:", error);
         alert("Erro de conexão com o servidor. Verifique sua internet.");

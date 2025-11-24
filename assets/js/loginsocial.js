@@ -109,44 +109,40 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- AQUI ESTÁ A LÓGICA AJUSTADA ---
-    function handleLoginSuccess(data) {
-        console.log("Sucesso! Dados recebidos:", data);
+function handleLoginSuccess(data) {
+    console.log("📥 JSON Recebido do Backend:", data);
 
-        // 1. PEGAR O TOKEN (Seu backend retorna 'access')
-        const accessToken = data.access;
-        const refreshToken = data.refresh;
-
-        if (accessToken) {
-            localStorage.setItem('access_token', accessToken);
-            localStorage.removeItem('token'); // Remove tokens antigos legados se houver
-        }
-
-        if (refreshToken) {
-            localStorage.setItem('refresh_token', refreshToken);
-        }
-
-        // 2. DADOS DO USUÁRIO
-        if (data.user) {
-            localStorage.setItem('user', JSON.stringify(data.user));
-            
-            // Salva nome separadamente se precisar em outros scripts
-            if (data.user.name) localStorage.setItem('userName', data.user.name);
-        }
-
-        showMessage('Login realizado com sucesso!', 'success');
-
-        // 3. REDIRECIONAMENTO INTELIGENTE
-        setTimeout(() => {
-            // Verifica a flag enviada pelo seu backend Python
-            if (data.user && data.user.is_new_user) {
-                console.log("Cadastro incompleto. Redirecionando para formulário...");
-                window.location.href = '/pages/cadastrese.html';
-            } else {
-                console.log("Usuário completo. Redirecionando para home...");
-                window.location.href = '/pages/homemorador.html';
-            }
-        }, 1000);
+    // 1. Armazenar Tokens (Chaves: "access" e "refresh")
+    if (data.access) {
+        localStorage.setItem('access_token', data.access);
     }
+    if (data.refresh) {
+        localStorage.setItem('refresh_token', data.refresh);
+    }
+
+    // 2. Armazenar Dados do Usuário (Chave: "user")
+    // Precisamos disso para preencher o formulário na próxima tela
+    if (data.user) {
+        // Salvamos o objeto inteiro como string para ler depois
+        localStorage.setItem('google_user_data', JSON.stringify(data.user));
+    }
+
+    // 3. Feedback visual
+    showMessage('Login Google realizado!', 'success');
+
+    // 4. Lógica de Redirecionamento baseada na flag "is_new_user"
+    setTimeout(() => {
+        if (data.user && data.user.is_new_user === true) {
+            // CENÁRIO 1: Novo usuário ou cadastro incompleto
+            console.log("⚠️ Cadastro incompleto (is_new_user: true). Redirecionando para completar...");
+            window.location.href = '/pages/cadastrese.html'; // Ajuste o caminho conforme sua pasta
+        } else {
+            // CENÁRIO 2: Usuário já completo (Login normal)
+            console.log("✅ Usuário completo. Indo para Home...");
+            window.location.href = '/pages/homemorador.html'; // Ajuste o caminho
+        }
+    }, 1500);
+}
 
     function handleLoginError(error) {
         showMessage(`Erro: ${error}`, 'error');
