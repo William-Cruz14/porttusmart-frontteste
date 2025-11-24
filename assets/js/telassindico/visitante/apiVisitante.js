@@ -45,18 +45,43 @@ async function criarVisitante(dados) {
 // Listar visitantes
 async function listarVisitantes() {
   const token = localStorage.getItem("access_token");
+
   try {
     const res = await fetch(API_URL_VISITANTES, {
       headers: { Authorization: `Bearer ${token}` },
     });
+
     if (!res.ok) throw new Error("Erro ao buscar visitantes");
+
     const data = await res.json();
-    return data.results || data;
+    const visitantes = data.results || data;
+
+    // ============================
+    // ORDENAR POR BLOCO + APTO
+    // ============================
+    visitantes.sort((a, b) => {
+      const blocoA = (a.apartment?.block || "").toUpperCase();
+      const blocoB = (b.apartment?.block || "").toUpperCase();
+
+      // Ordena primeiro pelo bloco
+      if (blocoA < blocoB) return -1;
+      if (blocoA > blocoB) return 1;
+
+      // Depois ordena pelo número do apartamento
+      const aptA = Number(a.apartment?.number || 0);
+      const aptB = Number(b.apartment?.number || 0);
+
+      return aptA - aptB;
+    });
+
+    return visitantes;
+
   } catch (err) {
-    console.error(err);
+    console.error("Erro ao listar visitantes:", err);
     return [];
   }
 }
+
 
 // Atualizar
 async function atualizarVisitante(id, dados) {
@@ -100,7 +125,9 @@ async function deletarVisitante(id) {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
+
     if (!res.ok) throw new Error(await res.text());
+
     alert("Visitante excluído com sucesso!");
   } catch (err) {
     alert("Erro ao excluir visitante: " + err.message);

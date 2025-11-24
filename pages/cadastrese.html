@@ -69,15 +69,16 @@
   <!-- ========================================================= -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Pega o objeto salvo pelo loginsocial.js
-      const user = JSON.parse(localStorage.getItem('user'));
+      const nome = localStorage.getItem("google_name");
+      const email = localStorage.getItem("google_email");
 
-      if (user) {
-        if (user.name) document.querySelector("input[name='nome']").value = user.name;
-        if (user.email) document.querySelector("input[name='email']").value = user.email;
-        // Se tiver outros campos vindos do Google, pode preencher aqui também
+      if (nome) {
+        document.querySelector("input[name='nome']").value = nome;
       }
-      
+
+      if (email) {
+        document.querySelector("input[name='email']").value = email;
+      }
     });
   </script>
 </body>

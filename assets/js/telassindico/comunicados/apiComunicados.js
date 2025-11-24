@@ -4,6 +4,20 @@
 const API_URL_COMUNICADOS = "https://api.porttusmart.tech/api/v1/core/communications/";
 const API_URL_DOCUMENTOS = "https://api.porttusmart.tech/api/v1/core/notices/";
 
+// Função para ordenar por bloco e número do apartamento
+function ordenarPorBlocoEApartamento(lista) {
+  return lista.sort((a, b) => {
+    const blocoA = a.block_apartment || "";
+    const blocoB = b.block_apartment || "";
+    const cmpBloco = blocoA.localeCompare(blocoB);
+    if (cmpBloco !== 0) return cmpBloco;
+
+    const aptA = a.number_apartment || 0;
+    const aptB = b.number_apartment || 0;
+    return aptA - aptB;
+  });
+}
+
 // Criar comunicado
 async function criarComunicado(dados) {
   const token = localStorage.getItem("access_token");
@@ -80,7 +94,8 @@ async function listarComunicados() {
            c.condominium?.code_condominium === condominioSelecionado
     );
 
-    return comunicadosFiltrados;
+    // 👉 Ordenar por bloco e apartamento
+    return ordenarPorBlocoEApartamento(comunicadosFiltrados);
   } catch {
     return [];
   }

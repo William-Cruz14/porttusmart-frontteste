@@ -13,6 +13,7 @@ const telas = {
   comunicados: typeof telasComunicados !== "undefined" ? telasComunicados : {},
   relatorios: typeof telasRelatorios !== "undefined" ? telasRelatorios : {},
   mensagens: typeof telasMensagens !== "undefined" ? telasMensagens : {},
+  senhas: typeof telasSenha !== "undefined" ? telasSenha : {},
 };
 
 // 🔹 Função para renderizar a tela

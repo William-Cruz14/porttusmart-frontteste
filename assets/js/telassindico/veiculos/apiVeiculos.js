@@ -53,15 +53,35 @@ async function listarVeiculos() {
 
     if (!res.ok) throw new Error("Erro ao buscar veículos");
     const data = await res.json();
-    const veiculos = data.results || data;
+    let veiculos = data.results || data;
 
-    // Filtro pelo condomínio selecionado
-    return veiculos.filter(v => v.condominium?.code_condominium === condominio.code_condominium);
+    // Filtro do condomínio
+    veiculos = veiculos.filter(
+      (v) => v.condominium?.code_condominium === condominio.code_condominium
+    );
+
+    // Ordenação bloco + número
+    veiculos.sort((a, b) => {
+      const blocoA = a.owner?.apartment?.block || "";
+      const blocoB = b.owner?.apartment?.block || "";
+
+      if (blocoA < blocoB) return -1;
+      if (blocoA > blocoB) return 1;
+
+      const numA = a.owner?.apartment?.number || 0;
+      const numB = b.owner?.apartment?.number || 0;
+
+      return numA - numB;
+    });
+
+    return veiculos;
+
   } catch (err) {
     console.error(err);
     return [];
   }
 }
+
 
 async function atualizarVeiculo(id, dados) {
   const token = localStorage.getItem("access_token");

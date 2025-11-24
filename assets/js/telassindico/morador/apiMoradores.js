@@ -41,33 +41,85 @@ async function criarMorador(dados) {
   } catch (err) {
     alert("Erro ao cadastrar morador: " + err.message);
     console.error(err);
-    throw err; // <- ESSENCIAL: propaga o erro
+    throw err;
   }
 }
 
-// Listar moradores
+// ==========================================================
+// LISTAR MORADORES (todas páginas + ordenação)
+// ==========================================================
 async function listarMoradores() {
   const token = localStorage.getItem("access_token");
   const condominio = JSON.parse(localStorage.getItem("condominioSelecionado"));
 
+  let url = API_URL_MORADORES;
+  let todosMoradores = [];
+
   try {
-    const res = await fetch(API_URL_MORADORES, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    if (!res.ok) throw new Error("Erro ao buscar moradores");
+    while (url) {
+      url = url.replace("http://", "https://");
 
-    const data = await res.json();
-    const moradores = data.results || data;
+      const res = await fetch(url, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
 
-    // 🔍 Filtra apenas moradores do condomínio selecionado
-    if (condominio?.code_condominium) {
-      return moradores.filter(
-        (m) =>
-          m.condominium?.code_condominium === condominio.code_condominium
-      );
+      if (!res.ok) throw new Error("Erro ao buscar moradores");
+
+      const data = await res.json();
+
+      todosMoradores = todosMoradores.concat(data.results || []);
+
+      url = data.next ? data.next.replace("http://", "https://") : null;
     }
 
-    return moradores;
+    // Filtra pelo condomínio selecionado
+    if (condominio?.code_condominium) {
+      todosMoradores = todosMoradores.filter((m) => {
+        const code =
+          m.condominium?.code_condominium ||
+          m.apartment_details?.condominium_detail?.code_condominium;
+        return code === condominio.code_condominium;
+      });
+    }
+
+    // ==========================================================
+    // 🔥 ORDENAR POR BLOCO (ALFABÉTICO) E APARTAMENTO (NUMÉRICO)
+    // ==========================================================
+    todosMoradores.sort((a, b) => {
+      const blocoA =
+        (a.block_apartment ||
+          a.apartment?.block ||
+          a.apartment_details?.block ||
+          "").toString().toUpperCase();
+
+      const blocoB =
+        (b.block_apartment ||
+          b.apartment?.block ||
+          b.apartment_details?.block ||
+          "").toString().toUpperCase();
+
+      const blocoCompare = blocoA.localeCompare(blocoB, "pt-BR", {
+        numeric: true,
+        sensitivity: "base"
+      });
+      if (blocoCompare !== 0) return blocoCompare;
+
+      const aptA =
+        Number(a.number_apartment ||
+        a.apartment?.number ||
+        a.apartment_details?.number ||
+        0);
+
+      const aptB =
+        Number(b.number_apartment ||
+        b.apartment?.number ||
+        b.apartment_details?.number ||
+        0);
+
+      return aptA - aptB;
+    });
+
+    return todosMoradores;
   } catch (err) {
     console.error("Erro ao listar moradores:", err);
     return [];
@@ -104,7 +156,7 @@ async function atualizarMorador(id, dados) {
   } catch (err) {
     alert("Erro ao atualizar morador: " + err.message);
     console.error(err);
-    throw err; // <- ESSENCIAL: propaga o erro
+    throw err;
   }
 }
 

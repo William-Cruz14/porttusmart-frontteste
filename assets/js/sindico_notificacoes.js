@@ -1,12 +1,44 @@
 // sindico_notificacoes.js
 const API_URL_NOTIFICACOES = "https://api.porttusmart.tech/api/v1/users/persons/";
-const TOKEN_NOTIFICACOES = localStorage.getItem("token");
+const TOKEN_NOTIFICACOES = localStorage.getItem("access_token");
 
 // Elementos
 const bellBtn = document.getElementById("notification-bell");
 const dropdown = document.getElementById("notification-dropdown");
 const notificationCount = document.getElementById("notification-count");
 
+// ========================================
+// 🔥 BUSCAR TODAS AS PÁGINAS DA API (SEM CORS)
+// ========================================
+async function buscarTodasPaginas(urlInicial) {
+  let url = urlInicial;
+  let resultados = [];
+
+  while (url) {
+    // Garante HTTPS
+    url = url.replace("http://", "https://");
+
+    const resp = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${TOKEN_NOTIFICACOES}` // sem Content-Type
+      }
+    });
+
+    if (!resp.ok) throw new Error(`Erro ao buscar página (${resp.status})`);
+
+    const data = await resp.json();
+
+    resultados = resultados.concat(data.results || []);
+
+    url = data.next ? data.next.replace("http://", "https://") : null;
+  }
+
+  return resultados;
+}
+
+// ========================================
+// 🔥 CARREGAR NOTIFICAÇÕES
+// ========================================
 async function carregarNotificacoes() {
   if (!TOKEN_NOTIFICACOES) {
     dropdown.innerHTML = `<p class="no-notifications">Usuário não autenticado.</p>`;
@@ -15,36 +47,28 @@ async function carregarNotificacoes() {
   }
 
   try {
-    const resp = await fetch(API_URL_NOTIFICACOES, {
-      headers: {
-        Authorization: `Bearer ${TOKEN_NOTIFICACOES}`,
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!resp.ok) {
-      dropdown.innerHTML = `<p class="no-notifications">Erro ao carregar notificações (${resp.status}).</p>`;
-      atualizarContador(0);
-      return;
-    }
-
-    const data = await resp.json();
-    const usuarios = data.results || [];
+    const usuarios = await buscarTodasPaginas(API_URL_NOTIFICACOES);
     const pendentes = usuarios.filter(u => !u.is_active);
 
     atualizarLista(pendentes);
   } catch (error) {
-    console.error("Erro na requisição:", error);
+    console.error("Erro ao carregar notificações:", error);
     dropdown.innerHTML = `<p class="no-notifications">Erro ao carregar notificações.</p>`;
     atualizarContador(0);
   }
 }
 
+// ========================================
+// 🔥 ATUALIZAR CONTADOR
+// ========================================
 function atualizarContador(qtd) {
   notificationCount.textContent = qtd > 0 ? qtd : "";
   notificationCount.style.display = qtd > 0 ? "inline-block" : "none";
 }
 
+// ========================================
+// 🔥 ATUALIZAR LISTA DE NOTIFICAÇÕES
+// ========================================
 function atualizarLista(usuarios) {
   dropdown.innerHTML = "";
 
@@ -79,6 +103,9 @@ function atualizarLista(usuarios) {
   });
 }
 
+// ========================================
+// 🔥 APROVAR (PATCH → precisa Content-Type)
+// ========================================
 async function aprovarUsuario(id) {
   if (!confirm("Deseja aprovar este usuário?")) return;
 
@@ -87,9 +114,9 @@ async function aprovarUsuario(id) {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${TOKEN_NOTIFICACOES}`,
-        "Content-Type": "application/json",
+        "Content-Type": "application/json" // OK aqui
       },
-      body: JSON.stringify({ is_active: true }),
+      body: JSON.stringify({ is_active: true })
     });
 
     if (!resp.ok) throw new Error(`Status ${resp.status}`);
@@ -101,13 +128,16 @@ async function aprovarUsuario(id) {
   }
 }
 
+// ========================================
+// 🔥 REJEITAR
+// ========================================
 async function rejeitarUsuario(id) {
   if (!confirm("Tem certeza que deseja rejeitar este usuário?")) return;
 
   try {
     const resp = await fetch(`${API_URL_NOTIFICACOES}${id}/`, {
       method: "DELETE",
-      headers: { Authorization: `Bearer ${TOKEN_NOTIFICACOES}` },
+      headers: { Authorization: `Bearer ${TOKEN_NOTIFICACOES}` }
     });
 
     if (!resp.ok) throw new Error(`Status ${resp.status}`);
@@ -119,6 +149,9 @@ async function rejeitarUsuario(id) {
   }
 }
 
+// ========================================
+// 🔔 EVENTOS DO SINO
+// ========================================
 bellBtn.addEventListener("click", () => {
   dropdown.classList.toggle("active");
 });
@@ -129,5 +162,8 @@ document.addEventListener("click", (e) => {
   }
 });
 
+// ========================================
+// 🔄 AUTO–LOAD
+// ========================================
 carregarNotificacoes();
 setInterval(carregarNotificacoes, 30000);

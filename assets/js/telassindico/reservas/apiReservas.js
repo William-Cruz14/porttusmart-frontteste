@@ -3,6 +3,22 @@
 // ------------------------
 const API_URL_RESERVAS = "https://api.porttusmart.tech/api/v1/core/reservations/";
 
+// Função para ordenar por bloco e número
+function ordenarReservas(reservas) {
+  return reservas.sort((a, b) => {
+    const blocoA = a.resident?.apartment?.block || "";
+    const blocoB = b.resident?.apartment?.block || "";
+
+    const compareBloco = blocoA.localeCompare(blocoB);
+    if (compareBloco !== 0) return compareBloco;
+
+    const aptA = a.resident?.apartment?.number || 0;
+    const aptB = b.resident?.apartment?.number || 0;
+
+    return aptA - aptB;
+  });
+}
+
 async function criarReserva(dados) {
   const token = localStorage.getItem("access_token");
   const condominio = JSON.parse(localStorage.getItem("condominioSelecionado"));
@@ -51,16 +67,17 @@ async function listarReservas() {
   if (!res.ok) throw new Error("Erro ao buscar reservas");
 
   const data = await res.json();
-  const reservas = data.results || data;
+  let reservas = data.results || data;
 
   // 🔍 Filtra apenas reservas do condomínio selecionado
   if (condominio?.code_condominium) {
-    return reservas.filter(
+    reservas = reservas.filter(
       (r) => r.condominium?.code_condominium === condominio.code_condominium
     );
   }
 
-  return reservas;
+  // 👉 Ordenar por bloco e número (somente isso)
+  return ordenarReservas(reservas);
 }
 
 async function deletarReserva(id) {

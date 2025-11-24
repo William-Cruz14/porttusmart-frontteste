@@ -1,6 +1,4 @@
-// ------------------------
 // telasTrocarSenha.js
-// ------------------------
 const telasSenha = {
   "Alterar Senha": `
     <div class="content-top">
@@ -19,7 +17,7 @@ const telasSenha = {
           <input type="password" name="new_password2" placeholder="Confirme a nova senha" required>
         </div>
 
-        <div id="msgTrocaSenha"></div>
+        <div id="msgTrocaSenha" style="display:none; color:green; margin-top:10px;"></div>
 
         <div class="senha-actions">
           <button type="submit" class="btn-salvar-senha">Salvar</button>

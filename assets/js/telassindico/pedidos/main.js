@@ -5,11 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const content = document.querySelector(".content");
   let entregasTbodyListener = null;
 
-  // --- Funções de Blocos e Apartamentos Dinâmicos ---
   async function getApartamentosDoCondominio() {
     const cond = JSON.parse(localStorage.getItem("condominioSelecionado"));
     if (!cond) return [];
-
     try {
       const resposta = await listarApartamentos(); // função da API
       const todos = resposta?.results || [];
@@ -50,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
         selectApto.disabled = true;
         return;
       }
-
       const aptos = await carregarApartamentosEntrega(blocoSel);
       selectApto.innerHTML =
         `<option value="">Selecione o apartamento</option>` +
@@ -64,8 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
     content.innerHTML = telasEntregas["Cadastro de entregas"];
     const form = content.querySelector(".form-cadastro-entrega");
     if (!form) return;
-
-    // Prepara selects dinâmicos
     await prepararSelectsEntrega(form);
 
     if (entrega) {
@@ -79,53 +74,80 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ===== HISTÓRICO ENTREGA =====
+  // ===== HISTÓRICO ENTREGA COM FILTROS =====
   async function carregarHistorico() {
     content.innerHTML = telasEntregas["Histórico de entregas"];
     const tbody = content.querySelector("#tabelaEntregasBody");
     if (!tbody) return;
 
-    // Preencher selects do filtro
     const selectBloco = content.querySelector("#filtroBlocoEntrega");
     const selectApto = content.querySelector("#filtroApartamentoEntrega");
-    if (selectBloco && selectApto) {
-      const blocos = await carregarBlocosEntrega();
-      selectBloco.innerHTML =
-        `<option value="">Filtrar por bloco</option>` +
-        blocos.map(b => `<option value="${b}">${b}</option>`).join("");
+    const btnBuscar = content.querySelector("#btnBuscarEntrega");
+    const btnLimpar = content.querySelector("#btnLimparEntrega");
 
-      selectBloco.addEventListener("change", async () => {
-        const blocoSel = selectBloco.value;
-        const aptos = await carregarApartamentosEntrega(blocoSel);
-        selectApto.innerHTML =
-          `<option value="">Filtrar por apartamento</option>` +
-          aptos.map(a => `<option value="${a.number}">${a.number}</option>`).join("");
-        selectApto.disabled = !blocoSel;
-      });
-      selectApto.disabled = true;
+    let todasEntregas = await listarEntregas();
+
+    todasEntregas.sort((a, b) => {
+      if ((a.owner?.apartment?.block || "") < (b.owner?.apartment?.block || "")) return -1;
+      if ((a.owner?.apartment?.block || "") > (b.owner?.apartment?.block || "")) return 1;
+      return (a.owner?.apartment?.number || 0) - (b.owner?.apartment?.number || 0);
+    });
+
+    // Preenche select de blocos
+    const blocos = [...new Set(todasEntregas.map(e => e.owner?.apartment?.block).filter(Boolean))];
+    selectBloco.innerHTML = `<option value="">Filtrar por bloco</option>` +
+                            blocos.map(b => `<option value="${b}">${b}</option>`).join("");
+    selectBloco.addEventListener("change", () => {
+      const blocoSel = selectBloco.value;
+      const aptos = todasEntregas
+        .filter(e => !blocoSel || e.owner?.apartment?.block === blocoSel)
+        .map(e => e.owner?.apartment?.number)
+        .filter(Boolean);
+      const aptosUnicos = [...new Set(aptos)];
+      selectApto.innerHTML = `<option value="">Filtrar por apartamento</option>` +
+                             aptosUnicos.map(a => `<option value="${a}">${a}</option>`).join("");
+      selectApto.disabled = !aptosUnicos.length;
+    });
+
+    function preencherTabela(entregas) {
+      tbody.innerHTML = entregas.length
+        ? entregas.map((e) => {
+            const bloco = e.owner?.apartment?.block ?? "-";
+            const apartamento = e.owner?.apartment?.number ?? "-";
+            return `
+              <tr>
+                <td>${e.order_code || "-"}</td>
+                <td>${e.status || "-"}</td>
+                <td>${bloco}</td>
+                <td>${apartamento}</td>
+                <td>
+                  <button class="btn-excluir-entrega" data-id="${e.id}">Excluir</button>
+                </td>
+              </tr>`;
+          }).join("")
+        : `<tr><td colspan="5" style="text-align:center;">Nenhuma entrega encontrada</td></tr>`;
     }
 
-    const entregas = await listarEntregas();
+    // Botões Buscar e Limpar
+    btnBuscar.addEventListener("click", () => {
+      const blocoSel = selectBloco.value;
+      const aptoSel = selectApto.value;
+      const filtradas = todasEntregas.filter(e => {
+        const bloco = e.owner?.apartment?.block;
+        const apto = e.owner?.apartment?.number;
+        return (!blocoSel || bloco === blocoSel) && (!aptoSel || apto == aptoSel);
+      });
+      preencherTabela(filtradas);
+    });
 
-    tbody.innerHTML = entregas.length
-      ? entregas.map((e) => {
-          const bloco = e.owner?.apartment?.block ?? "-";
-          const apartamento = e.owner?.apartment?.number ?? "-";
+    btnLimpar.addEventListener("click", () => {
+      selectBloco.value = "";
+      selectApto.value = "";
+      selectApto.disabled = true;
+      preencherTabela(todasEntregas);
+    });
 
-          return `
-            <tr>
-              <td>${e.order_code || "-"}</td>
-              <td>${e.status || "-"}</td>
-              <td>${bloco}</td>
-              <td>${apartamento}</td>
-              <td>
-                <button class="btn-excluir-entrega" data-id="${e.id}">Excluir</button>
-              </td>
-            </tr>
-          `;
-        }).join("")
-      : `<tr><td colspan="5" style="text-align:center;">Nenhuma entrega encontrada</td></tr>`;
-
+    preencherTabela(todasEntregas);
     attachEntregasTableListener();
   }
 
@@ -135,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!tbody) return;
 
     if (entregasTbodyListener) {
-      try { tbody.removeEventListener("click", entregasTbodyListener); } catch (err) {}
+      try { tbody.removeEventListener("click", entregasTbodyListener); } catch {}
       entregasTbodyListener = null;
     }
 
@@ -182,9 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         await criarEntrega(dados);
       }
-
       form.reset();
-
     } catch (err) {
       console.error(err);
       alert("Erro ao salvar entrega. Verifique e tente novamente.");
@@ -197,7 +217,6 @@ document.addEventListener("DOMContentLoaded", () => {
     menu.addEventListener("click", (e) => {
       if (!e.target.classList.contains("subitem")) return;
       const item = e.target.textContent.trim();
-
       if (item === "Cadastro de entregas") carregarCadastro();
       if (item === "Histórico de entregas") carregarHistorico();
     });
